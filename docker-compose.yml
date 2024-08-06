@@ -1,0 +1,30 @@
+version: '2'
+services:
+  my-sql:
+    image: mysql:8.0
+    ports:
+      - "4000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: nestdb
+      MYSQL_DATABASE: nestdb
+      MYSQL_USER: nestdb
+      MYSQL_PASSWORD: nestdb
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  nest-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm run start:dev
+    environment:
+      PORT: 3001
+      NODE_ENV: development
+    depends_on:
+      - my-sql
+    ports:
+      - "3001:3001"

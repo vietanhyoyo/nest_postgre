@@ -43,18 +43,16 @@ export class Product {
 
   @Column()
   @CreateDateColumn({
-    type: 'datetime',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   @IsDate()
   createdAt: Date;
 
   @Column()
   @UpdateDateColumn({
-    type: 'datetime',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   @IsDate()
   updatedAt: Date;

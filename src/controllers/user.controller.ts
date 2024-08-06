@@ -5,7 +5,9 @@ import { UserRes } from 'src/controllers/types/user_types/user.res';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Public } from 'src/common/decorators/public.decorator';
 
+@Public()
 @ApiTags('user')
 @ApiBearerAuth()
 @Controller('user')
