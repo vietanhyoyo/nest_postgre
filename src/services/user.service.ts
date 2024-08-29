@@ -4,10 +4,11 @@ import { CreateUserInput } from 'src/services/types/user_types/create.user.input
 import { User } from 'src/entities/user';
 import { hash } from 'bcrypt';
 import { ErrorMessage } from 'src/common/enum/error.message.enum';
+import { PaginationInput } from 'src/services/types/pagination_types/pagination.input';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class UserService {
-  constructor(private readonly userRepo: UserRepository) { }
+  constructor(private readonly userRepo: UserRepository) {}
 
   async createUser(input: CreateUserInput) {
     let user = new User();
@@ -32,5 +33,23 @@ export class UserService {
       throw new BadRequestException(ErrorMessage.USER_NOT_FOUND);
     }
     return userDb;
+  }
+
+  async getAllUsers(queryParams: PaginationInput) {
+    const { page = 1, limit = 10 } = queryParams;
+
+    const [users, total] = await this.userRepo.findAll({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      total,
+      totalPages,
+      currentPage: page,
+      users,
+    };
   }
 }

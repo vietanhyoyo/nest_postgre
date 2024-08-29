@@ -26,4 +26,13 @@ export class UserRepository {
     const userdb = await this.repo.save(user);
     return await this.findById(userdb.user_id);
   }
+
+  async findAll(paginationOptions: { skip: number, take: number }): Promise<[User[], number]> {
+    const [users, total] = await this.repo.findAndCount({
+      skip: paginationOptions.skip,
+      take: paginationOptions.take,
+    });
+
+    return [users, total];
+  }
 }
