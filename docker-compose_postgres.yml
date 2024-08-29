@@ -2,12 +2,16 @@ version: '2'
 services:
   postgres:
     image: postgres:13
-    container_name: my_postgres
+    container_name: kol_postgres
     environment:
-      POSTGRES_DB: my_postgres
-      POSTGRES_USER: my_postgres
-      POSTGRES_PASSWORD: my_postgres
+      POSTGRES_DB: kol_postgres
+      POSTGRES_USER: kol_use
+      POSTGRES_PASSWORD: Kol-password%08-2024
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
-      - ./data/postgres:/var/lib/postgresql
+      - kol_postgres:/var/lib/postgresql/data
+
+volumes:
+  kol_postgres:
+    driver: local
