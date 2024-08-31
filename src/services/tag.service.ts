@@ -3,6 +3,7 @@ import { TagRepository } from 'src/repositories/tag.repositories';
 import { CreateTagInput } from './types/tag_types/create.tag.input';
 import { Tag } from 'src/entities/tag';
 import { ErrorMessage } from 'src/common/enum/error.message.enum';
+import { PaginationInput } from './types/pagination_types/pagination.input';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class TagService {
@@ -19,5 +20,23 @@ export class TagService {
     tag.tag_name = input.tag_name;
 
     return await this.tagRepo.create(tag);
+  }
+
+  async getAllTag(queryParams: PaginationInput) {
+    const { page = 1, limit = 10 } = queryParams;
+
+    const [tags, total] = await this.tagRepo.findAll({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      total,
+      totalPages,
+      currentPage: page,
+      tags,
+    };
   }
 }

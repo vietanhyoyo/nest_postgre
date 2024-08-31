@@ -1,9 +1,11 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { TagService } from 'src/services/tag.service';
-import { TagRes } from './types/taq_types/tag.res';
-import { CreateTagReq } from './types/taq_types/create.tag.req';
+import { TagRes } from './types/tag_types/tag.res';
+import { CreateTagReq } from './types/tag_types/create.tag.req';
+import { GetAllTagRes } from './types/tag_types/get.all.tag.res';
+import { GetAllTagReq } from './types/tag_types/get.all.tag.req';
 
 @Public()
 @ApiTags('tag')
@@ -20,5 +22,15 @@ export class TagController {
   })
   async create(@Body() body: CreateTagReq) {
     return this.tagService.createTag(body);
+  }
+
+  @Get('/all')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllTagRes,
+  })
+  async getAllUsers(@Query() queryParams: GetAllTagReq) {
+    return await this.tagService.getAllTag(queryParams);
   }
 }

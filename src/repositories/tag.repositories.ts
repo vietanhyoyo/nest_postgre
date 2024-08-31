@@ -10,10 +10,6 @@ export class TagRepository {
     private repo: Repository<Tag>,
   ) {}
 
-  async findAll() {
-    return this.repo.find();
-  }
-
   async findByName(name: string) {
     return this.repo.findOne({
       where: { tag_name: name },
@@ -23,5 +19,17 @@ export class TagRepository {
   async create(tag: Tag) {
     const newTag = await this.repo.save(tag);
     return newTag;
+  }
+
+  async findAll(paginationOptions: {
+    skip: number;
+    take: number;
+  }): Promise<[Tag[], number]> {
+    const [tags, total] = await this.repo.findAndCount({
+      skip: paginationOptions.skip,
+      take: paginationOptions.take,
+    });
+
+    return [tags, total];
   }
 }
