@@ -3,12 +3,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Customer } from './customer';
 
 @Entity('receiving_place', { schema: 'public' })
 export class ReceivingPlace {
@@ -31,10 +28,6 @@ export class ReceivingPlace {
   @Column()
   @IsString()
   email: string;
-
-  @ManyToOne(() => Customer)
-  @JoinColumn({ name: 'customer_id' })
-  customer: Customer;
 
   @Column()
   @CreateDateColumn({

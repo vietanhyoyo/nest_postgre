@@ -3,5 +3,6 @@ export enum ErrorMessage {
   INCORRECT_USER = 'Incorrect user',
   USER_INACTIVE = 'User is inactive',
   EMAIL_EXITS = 'Email exits',
-  WAREHOUSE_NOT_FOUND = 'Warehouse not found'
+  WAREHOUSE_NOT_FOUND = 'Warehouse not found',
+  TAG_EXITS = 'Tag exits'
 }

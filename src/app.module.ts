@@ -11,6 +11,7 @@ import { PassportModule } from '@nestjs/passport';
 import { GlobalModule } from './modules/global.module';
 import { WarehouseModule } from './modules/warehouse.module';
 import { ProductModule } from './modules/product.module';
+import { TagModule } from './modules/tag.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ProductModule } from './modules/product.module';
     AuthModule,
     WarehouseModule,
     ProductModule,
+    TagModule,
   ],
   controllers: [AppController],
   providers: [
