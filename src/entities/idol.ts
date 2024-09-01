@@ -16,6 +16,10 @@ export class Idol {
 
   @Column()
   @IsString()
+  idol_name: string;
+
+  @Column()
+  @IsString()
   description: string;
 
   @Column()

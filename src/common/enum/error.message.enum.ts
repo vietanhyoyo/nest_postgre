@@ -4,5 +4,6 @@ export enum ErrorMessage {
   USER_INACTIVE = 'User is inactive',
   EMAIL_EXITS = 'Email exits',
   WAREHOUSE_NOT_FOUND = 'Warehouse not found',
-  TAG_EXITS = 'Tag exits'
+  TAG_EXITS = 'Tag exits',
+  DATA_EXITS = 'Data exits'
 }

@@ -4,5 +4,5 @@ import { TagRes } from './tag.res';
 
 export class GetAllTagRes extends PaginationRes {
   @ApiProperty({ type: [TagRes], description: 'List of tags' })
-  users: TagRes[];
+  tags: TagRes[];
 }

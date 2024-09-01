@@ -12,6 +12,7 @@ import { GlobalModule } from './modules/global.module';
 import { WarehouseModule } from './modules/warehouse.module';
 import { ProductModule } from './modules/product.module';
 import { TagModule } from './modules/tag.module';
+import { IdolModule } from './modules/idol.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TagModule } from './modules/tag.module';
     WarehouseModule,
     ProductModule,
     TagModule,
+    IdolModule,
   ],
   controllers: [AppController],
   providers: [
