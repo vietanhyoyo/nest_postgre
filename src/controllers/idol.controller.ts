@@ -4,6 +4,8 @@ import { Public } from 'src/common/decorators/public.decorator';
 import { IdolService } from 'src/services/idol.service';
 import { GetAllIdolRes } from './types/idol_types/get.all.idol.res';
 import { GetAllIdolReq } from './types/idol_types/get.all.idol.req';
+import { IdolRes } from './types/idol_types/idol.res';
+import { CreateIdolReq } from './types/idol_types/create.idol.req';
 
 @Public()
 @ApiTags('idol')
@@ -12,15 +14,15 @@ import { GetAllIdolReq } from './types/idol_types/get.all.idol.req';
 export class IdolController {
   constructor(private idolService: IdolService) {}
 
-  //   @Post('/')
-  //   @HttpCode(201)
-  //   @ApiResponse({
-  //     status: 201,
-  //     type: TagRes,
-  //   })
-  //   async create(@Body() body: CreateTagReq) {
-  //     return this.idolService.createTag(body);
-  //   }
+    @Post('/')
+    @HttpCode(201)
+    @ApiResponse({
+      status: 201,
+      type: IdolRes,
+    })
+    async create(@Body() body: CreateIdolReq) {
+      return this.idolService.createIdol(body);
+    }
 
   @Get('/all')
   @HttpCode(200)

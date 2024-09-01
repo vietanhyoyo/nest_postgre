@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Tag } from 'src/entities/tag';
+import { TagRes } from '../tag_types/tag.res';
 
 export class IdolRes {
   @ApiProperty()
@@ -17,8 +17,8 @@ export class IdolRes {
   @ApiProperty()
   images: string[];
 
-  @ApiProperty()
-  tags: Tag[];
+  @ApiProperty({ type: [TagRes] })
+  tags: TagRes[];
 
   @ApiProperty()
   bio_link: string[];
