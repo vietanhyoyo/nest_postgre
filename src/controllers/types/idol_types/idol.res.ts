@@ -6,6 +6,9 @@ export class IdolRes {
   idol_id: number;
 
   @ApiProperty()
+  thumbnail: string;
+
+  @ApiProperty()
   idol_name: string;
 
   @ApiProperty()

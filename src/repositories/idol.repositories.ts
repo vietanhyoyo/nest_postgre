@@ -16,6 +16,12 @@ export class IdolRepository {
     });
   }
 
+  async findById(id: number): Promise<Idol | null> {
+    return this.repo.findOne({
+      where: { idol_id: id },
+    });
+  }
+
   async create(idol: Idol) {
     const newIdol = await this.repo.save(idol);
     return newIdol;
@@ -34,8 +40,8 @@ export class IdolRepository {
     return [idols, total];
   }
 
-  async update(id: number, updateData: Partial<Idol>): Promise<Idol> {
-    await this.repo.update(id, updateData);
-    return this.repo.findOne({ where: { idol_id: id } });
+  async update(updateData: Partial<Idol>): Promise<Idol> {
+    await this.repo.save(updateData);
+    return this.repo.findOne({ where: { idol_id: updateData.idol_id }, relations: ['tags'] });
   }
 }

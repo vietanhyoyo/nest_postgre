@@ -1,10 +1,12 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Tag } from './tag';
 
@@ -20,9 +22,13 @@ export class Idol {
 
   @Column()
   @IsString()
+  thumbnail: string;
+
+  @Column('text')
+  @IsString()
   description: string;
 
-  @Column()
+  @Column('text')
   @IsString()
   detail: string;
 
@@ -41,4 +47,20 @@ export class Idol {
   @Column('text', { array: true })
   @IsString({ each: true })
   bio_link: string[];
+
+  @Column()
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @IsDate()
+  createdAt: Date;
+
+  @Column()
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @IsDate()
+  updatedAt: Date;
 }

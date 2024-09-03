@@ -1,8 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString } from 'class-validator';
 import { Tag } from 'src/entities/tag';
 
-export class CreateIdolReq {
+export class UpdateIdolReq {
+  @ApiProperty()
+  @IsNumber()
+  idol_id: number;
+
   @ApiProperty()
   @IsString()
   idol_name: string;

@@ -32,4 +32,9 @@ export class TagRepository {
 
     return [tags, total];
   }
+
+  async findByIds(ids: number[]): Promise<Tag[]> {
+    // Use TypeORM's findByIds method to find tags by their IDs
+    return this.repo.findByIds(ids);
+  }
 }

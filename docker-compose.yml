@@ -1,30 +1,35 @@
 version: '2'
 services:
-  my-sql:
-    image: mysql:8.0
-    ports:
-      - "4000:3306"
+  postgres:
+    image: postgres:13
+    container_name: kol_postgres
     environment:
-      MYSQL_ROOT_PASSWORD: nestdb
-      MYSQL_DATABASE: nestdb
-      MYSQL_USER: nestdb
-      MYSQL_PASSWORD: nestdb
+      POSTGRES_DB: kol_postgres
+      POSTGRES_USER: kol_use
+      POSTGRES_PASSWORD: Kol-password%08-2024
+    ports:
+      - "5434:5432"
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - kol_postgres:/var/lib/postgresql/data
 
-  nest-app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    working_dir: /app
-    volumes:
-      - ./:/app
-      - /app/node_modules
-    command: npm run start:dev
+  nestjs:
+    build:
+      context: ./
+      dockerfile: Dockerfile   
+    container_name: kol_nestjs
     environment:
-      PORT: 3001
-      NODE_ENV: development
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: kol_use
+      DATABASE_PASSWORD: Kol-password%08-2024
+      DATABASE_NAME: kol_postgres
+    env_file:
+      - ./src/config/env/prod.env 
     depends_on:
-      - my-sql
+      - postgres
     ports:
-      - "3001:3001"
+      - "3004:3004" 
+
+volumes:
+  kol_postgres:
+    driver: local

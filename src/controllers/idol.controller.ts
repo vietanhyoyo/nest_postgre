@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Patch, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { IdolService } from 'src/services/idol.service';
@@ -6,6 +6,7 @@ import { GetAllIdolRes } from './types/idol_types/get.all.idol.res';
 import { GetAllIdolReq } from './types/idol_types/get.all.idol.req';
 import { IdolRes } from './types/idol_types/idol.res';
 import { CreateIdolReq } from './types/idol_types/create.idol.req';
+import { UpdateIdolReq } from './types/idol_types/update.idol.req';
 
 @Public()
 @ApiTags('idol')
@@ -32,5 +33,15 @@ export class IdolController {
   })
   async getAllIdol(@Query() queryParams: GetAllIdolReq) {
     return await this.idolService.getAllIdol(queryParams);
+  }
+
+  @Patch('/update')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: IdolRes,
+  })
+  async update(@Body() body: UpdateIdolReq) {
+    return this.idolService.updateIdol(body);
   }
 }

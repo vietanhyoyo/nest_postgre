@@ -5,5 +5,6 @@ export enum ErrorMessage {
   EMAIL_EXITS = 'Email exits',
   WAREHOUSE_NOT_FOUND = 'Warehouse not found',
   TAG_EXITS = 'Tag exits',
-  DATA_EXITS = 'Data exits'
+  DATA_EXITS = 'Data exits',
+  DATA_NOT_FOUND = 'Data note found'
 }
