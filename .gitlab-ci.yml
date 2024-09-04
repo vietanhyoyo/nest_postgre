@@ -1,0 +1,22 @@
+image: docker:20.10.16
+
+default:
+  tags:
+    - ci-cd_popcorn_admin
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  only:
+    - deploy
+  # script:
+  #   - docker-compose build app
+  #   - docker-compose stop app
+  #   - docker-compose rm -f app
+  #   - docker-compose up -d app
+  script:
+    - docker-compose down 
+    - docker-compose build 
+    - docker-compose up -d
