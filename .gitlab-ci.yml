@@ -10,7 +10,7 @@ stages:
 deploy:
   stage: deploy
   only:
-    - deploy
+    - main
   # script:
   #   - docker-compose build app
   #   - docker-compose stop app
