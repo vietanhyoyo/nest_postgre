@@ -1,0 +1,35 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:13
+    container_name: kol_postgres
+    environment:
+      POSTGRES_DB: kol_postgres
+      POSTGRES_USER: kol_use
+      POSTGRES_PASSWORD: Kol-password%08-2024
+    ports:
+      - "5434:5432"
+    volumes:
+      - kol_postgres:/var/lib/postgresql/data
+
+  nestjs:
+    build:
+      context: ./
+      dockerfile: Dockerfile   
+    container_name: kol_nestjs
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: kol_use
+      DATABASE_PASSWORD: Kol-password%08-2024
+      DATABASE_NAME: kol_postgres
+    env_file:
+      - ./src/config/env/prod.env 
+    depends_on:
+      - postgres
+    ports:
+      - "3004:3004" 
+
+volumes:
+  kol_postgres:
+    driver: local

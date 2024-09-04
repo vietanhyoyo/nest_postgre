@@ -1,0 +1,7 @@
+1 - 
+
+SELECT * FROM product WHERE warehouse_id = 1
+
+2 - 
+
+SELECT SUM(total_price) FROM import_invoice WHERE supplier_id 
