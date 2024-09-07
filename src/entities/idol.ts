@@ -22,6 +22,10 @@ export class Idol {
 
   @Column()
   @IsString()
+  slug: string;
+
+  @Column()
+  @IsString()
   thumbnail: string;
 
   @Column('text')

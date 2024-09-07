@@ -14,6 +14,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Tag } from 'src/entities/tag';
 import { Repository } from 'typeorm';
 import { TagRepository } from 'src/repositories/tag.repositories';
+import { Helper } from 'src/common/helper';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class IdolService {
@@ -31,6 +32,7 @@ export class IdolService {
     }
 
     idol.thumbnail = input.thumbnail;
+    idol.slug = Helper.convertToSlug(input.idol_name);
     idol.idol_name = input.idol_name;
     idol.description = input.description;
     idol.detail = input.detail;
@@ -57,6 +59,14 @@ export class IdolService {
       currentPage: page,
       idols,
     };
+  }
+
+  async getIdolBySlug(slug: string) {
+    const idolDb = await this.idolRepo.findBySlug(slug);
+    if (!idolDb) {
+      throw new BadRequestException(ErrorMessage.IDOL_NOT_FOUND);
+    }
+    return idolDb;
   }
 
   async updateIdol(input: UpdateIdolInput) {
