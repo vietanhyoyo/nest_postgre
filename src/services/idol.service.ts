@@ -91,4 +91,13 @@ export class IdolService {
 
     return updatedIdol;
   }
+
+  async removeIdol(idolId: number): Promise<void> {
+    const idol = await this.idolRepo.findById(idolId);
+
+    if (!idol) {
+      throw new NotFoundException(ErrorMessage.DATA_NOT_FOUND);
+    }
+    await this.idolRepo.deleteIdolById(idolId);
+  }
 }

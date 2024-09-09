@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -62,5 +63,15 @@ export class IdolController {
   })
   async getIdolBySlug(@Param('slug') slug: string) {
     return await this.idolService.getIdolBySlug(slug);
+  }
+
+  @Delete('/:id')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    description: 'Idol deleted successfully',
+  })
+  async deleteIdol(@Param('id') idolId: number): Promise<void> {
+    return await this.idolService.removeIdol(idolId);
   }
 }

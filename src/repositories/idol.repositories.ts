@@ -53,4 +53,23 @@ export class IdolRepository {
       relations: ['tags'],
     });
   }
+
+  async deleteIdolById(idolId: number): Promise<void> {
+    const idol = await this.repo.findOne({
+      where: { idol_id: idolId },
+      relations: ['tags'],
+    });
+
+    if (!idol) {
+      throw new Error('Idol not found');
+    }
+
+    await this.repo
+      .createQueryBuilder()
+      .relation(Idol, 'tags')
+      .of(idolId)
+      .remove(idol.tags);
+
+    await this.repo.delete(idolId);
+  }
 }

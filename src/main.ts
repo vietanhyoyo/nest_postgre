@@ -11,8 +11,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api');
   const config = new DocumentBuilder()
-    .setTitle('Admin')
-    .setDescription('The admin API description')
+    .setTitle('Kol API')
+    .setDescription('The API of OXODB')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
