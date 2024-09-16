@@ -100,4 +100,32 @@ export class IdolService {
     }
     await this.idolRepo.deleteIdolById(idolId);
   }
+
+  async createCrawlIdol(input: CreateIdolInput) {
+    let idol = new Idol();
+
+    let idolDb = await this.idolRepo.findByName(input.idol_name);
+    if (idolDb) {
+      idolDb.thumbnail = input.thumbnail;
+      idolDb.slug = Helper.convertToSlug(input.idol_name);
+      idolDb.description = input.description;
+      idolDb.detail = input.detail;
+      idolDb.images = input.images;
+      idolDb.bio_link = input.bio_link;
+      idolDb.tags = input.tags;
+
+      return await this.idolRepo.update(idolDb);
+    }
+
+    idol.thumbnail = input.thumbnail;
+    idol.slug = Helper.convertToSlug(input.idol_name);
+    idol.idol_name = input.idol_name;
+    idol.description = input.description;
+    idol.detail = input.detail;
+    idol.images = input.images;
+    idol.bio_link = input.bio_link;
+    idol.tags = input.tags;
+
+    return await this.idolRepo.create(idol);
+  }
 }

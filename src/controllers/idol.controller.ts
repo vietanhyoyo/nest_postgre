@@ -133,6 +133,6 @@ export class IdolController {
     // Take image ----------------------------------------------
     idolData['images'] = [];
 
-    return this.idolService.createIdol(idolData);
+    return this.idolService.createCrawlIdol(idolData);
   }
 }

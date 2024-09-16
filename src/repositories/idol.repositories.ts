@@ -40,6 +40,9 @@ export class IdolRepository {
     const [idols, total] = await this.repo.findAndCount({
       skip: paginationOptions.skip,
       take: paginationOptions.take,
+      order: {
+        updatedAt: 'DESC',  
+      },
       relations: ['tags'],
     });
 
