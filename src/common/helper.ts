@@ -7,4 +7,8 @@ export class Helper {
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-');
   }
+
+  static removeReferences(str) {
+    return str.replace(/\[\w+\s*\d*\]/g, '');
+  }
 }
