@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -51,6 +51,10 @@ export class Idol {
   @Column('text', { array: true })
   @IsString({ each: true })
   bio_link: string[];
+
+  @Column()
+  @IsBoolean()
+  is_banner?: boolean;
 
   @Column()
   @CreateDateColumn({

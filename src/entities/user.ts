@@ -6,8 +6,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import Role from 'src/common/enum/role.enum';
-import { StatusUser } from 'src/common/enum/user.enum';
+import Role from '../common/enum/role.enum';
+import { StatusUser } from '../common/enum/user.enum';
 
 @Entity('user', { schema: 'public' })
 export class User {

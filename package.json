@@ -17,7 +17,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:create": "npm run typeorm -- migration:create",
+    "migration:generate": "npm run typeorm -- -d ./src/config/database/ormconfig.ts migration:generate",
+    "migration:run": "npm run typeorm -- -d ./src/config/database/ormconfig.ts migration:run",
+    "migration:revert": "npm run typeorm -- -d ./src/config/database/ormconfig.ts migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.4",
@@ -38,8 +43,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.12.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1",
-    "typeorm": "^0.3.20"
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -63,8 +67,9 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "typeorm": "^0.3.20",
     "typescript": "^5.1.3"
   },
   "jest": {
