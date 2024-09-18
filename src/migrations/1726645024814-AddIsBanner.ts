@@ -11,7 +11,7 @@ export class AddIsBanner1726645024814 implements MigrationInterface {
         }));
 
         // Cập nhật tất cả các bản ghi hiện có, đặt is_banner = true
-        await queryRunner.query(`UPDATE "idol" SET "is_banner" = true WHERE "is_banner" IS NULL`);
+        await queryRunner.query(`UPDATE "idol" SET "is_banner" = false WHERE "is_banner" IS NULL`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

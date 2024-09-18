@@ -52,7 +52,7 @@ export class Idol {
   @IsString({ each: true })
   bio_link: string[];
 
-  @Column()
+  @Column({ default: true })
   @IsBoolean()
   is_banner?: boolean;
 
