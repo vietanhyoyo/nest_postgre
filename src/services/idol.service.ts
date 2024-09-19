@@ -10,9 +10,6 @@ import { Idol } from 'src/entities/idol';
 import { IdolRepository } from 'src/repositories/idol.repositories';
 import { CreateIdolInput } from './types/idol_types/create.idol.input';
 import { UpdateIdolInput } from './types/idol_types/update.idol.input';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Tag } from 'src/entities/tag';
-import { Repository } from 'typeorm';
 import { TagRepository } from 'src/repositories/tag.repositories';
 import { Helper } from 'src/common/helper';
 

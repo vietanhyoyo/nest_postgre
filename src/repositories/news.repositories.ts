@@ -57,13 +57,13 @@ export class NewsRepository {
     });
   }
 
-  async deleteIdolById(newsId: number): Promise<void> {
-    const idol = await this.repo.findOne({
+  async deleteNewsById(newsId: number): Promise<void> {
+    const news = await this.repo.findOne({
       where: { news_id: newsId },
       relations: ['tags'],
     });
 
-    if (!idol) {
+    if (!news) {
       throw new Error('Idol not found');
     }
 
@@ -71,7 +71,7 @@ export class NewsRepository {
       .createQueryBuilder()
       .relation(News, 'tags')
       .of(newsId)
-      .remove(idol.tags);
+      .remove(news.tags);
 
     await this.repo.delete(newsId);
   }
