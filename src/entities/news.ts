@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Tag } from './tag';
 
-@Entity('News', { schema: 'public' })
+@Entity('news', { schema: 'public' })
 export class News {
   @PrimaryGeneratedColumn()
   @IsNumber()
@@ -19,6 +19,10 @@ export class News {
   @Column()
   @IsString()
   title: string;
+
+  @Column()
+  @IsString()
+  slug: string;
 
   @Column()
   @IsString()

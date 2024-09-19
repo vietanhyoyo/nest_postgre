@@ -56,6 +56,10 @@ export class Idol {
   @IsBoolean()
   is_banner?: boolean;
 
+  @Column({ default: 0 })
+  @IsNumber()
+  views: number;
+
   @Column()
   @CreateDateColumn({
     type: 'timestamp',

@@ -1,34 +1,37 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { TagRes } from '../tag_types/tag.res';
 
-export class IdolRes {
+export class NewsRes {
   @ApiProperty()
-  idol_id: number;
+  news_id: number;
+
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  slug: string;
 
   @ApiProperty()
   thumbnail: string;
 
   @ApiProperty()
-  idol_name: string;
+  author: string;
 
   @ApiProperty()
   description: string;
 
   @ApiProperty()
-  detail: string;
-
-  @ApiProperty()
-  images: string[];
-
-  @ApiProperty()
-  is_banner: boolean;
+  content: string;
 
   @ApiProperty()
   views: number;
 
-  @ApiProperty({ type: [TagRes] })
-  tags: TagRes[];
+  @ApiProperty()
+  createdAt: Date;
 
   @ApiProperty()
-  bio_link: string[];
+  updatedAt: Date;
+
+  @ApiProperty({ type: [TagRes] })
+  tags: TagRes[];
 }

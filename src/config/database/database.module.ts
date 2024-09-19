@@ -18,7 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         entities: [__dirname + '../../../entities/*{.ts,.js}'],
         migrations: [__dirname + '/../../migrations/*{.ts,.js}'],
         migrationsRun: false,
-        synchronize: false,
+        synchronize: true,
       }),
     }),
   ],

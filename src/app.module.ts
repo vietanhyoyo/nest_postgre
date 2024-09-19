@@ -13,6 +13,7 @@ import { WarehouseModule } from './modules/warehouse.module';
 import { ProductModule } from './modules/product.module';
 import { TagModule } from './modules/tag.module';
 import { IdolModule } from './modules/idol.module';
+import { NewsModule } from './modules/news.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { IdolModule } from './modules/idol.module';
     ProductModule,
     TagModule,
     IdolModule,
+    NewsModule,
   ],
   controllers: [AppController],
   providers: [
