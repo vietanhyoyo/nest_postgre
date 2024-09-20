@@ -7,5 +7,6 @@ export enum ErrorMessage {
   TAG_EXITS = 'Tag exits',
   DATA_EXITS = 'Data exits',
   IDOL_NOT_FOUND = 'Idol note found',
-  DATA_NOT_FOUND = 'Data note found'
+  DATA_NOT_FOUND = 'Data note found',
+  NEWS_NOT_FOUND = 'News note found'
 }

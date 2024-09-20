@@ -85,4 +85,12 @@ export class NewsService {
     }
     await this.newsRepo.deleteNewsById(newsId);
   }
+
+  async getNewsBySlug(slug: string) {
+    const newsDb = await this.newsRepo.findBySlug(slug);
+    if (!newsDb) {
+      throw new BadRequestException(ErrorMessage.NEWS_NOT_FOUND);
+    }
+    return newsDb;
+  }
 }

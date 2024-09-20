@@ -49,16 +49,6 @@ export class IdolController {
     return await this.idolService.getAllIdol(queryParams);
   }
 
-  @Patch('/update')
-  @HttpCode(200)
-  @ApiResponse({
-    status: 200,
-    type: IdolRes,
-  })
-  async update(@Body() body: UpdateIdolReq) {
-    return this.idolService.updateIdol(body);
-  }
-
   @Get('/:slug')
   @HttpCode(200)
   @ApiResponse({
@@ -67,6 +57,16 @@ export class IdolController {
   })
   async getIdolBySlug(@Param('slug') slug: string) {
     return await this.idolService.getIdolBySlug(slug);
+  }
+
+  @Patch('/update')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: IdolRes,
+  })
+  async update(@Body() body: UpdateIdolReq) {
+    return this.idolService.updateIdol(body);
   }
 
   @Delete('/:id')

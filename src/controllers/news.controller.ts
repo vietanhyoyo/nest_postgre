@@ -45,6 +45,16 @@ export class NewsController {
     return await this.newsService.getAllNews(queryParams);
   }
 
+  @Get('/:slug')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: NewsRes,
+  })
+  async getNewsBySlug(@Param('slug') slug: string) {
+    return await this.newsService.getNewsBySlug(slug);
+  }
+  
   @Patch('/update')
   @HttpCode(200)
   @ApiResponse({
@@ -64,4 +74,5 @@ export class NewsController {
   async deleteIdol(@Param('id') newsId: number): Promise<void> {
     return await this.newsService.removeNews(newsId);
   }
+
 }
