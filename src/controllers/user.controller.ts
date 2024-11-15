@@ -18,7 +18,6 @@ import { Public } from 'src/common/decorators/public.decorator';
 import { GetAllUserReq } from './types/user_types/get.all.user.req';
 import { GetAllUserRes } from './types/user_types/get.all.user.res';
 
-@Public()
 @ApiTags('user')
 @ApiBearerAuth()
 @Controller('user')
