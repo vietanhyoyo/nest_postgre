@@ -1,6 +1,6 @@
+import { Role } from '@/entities/role';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
-import Role from 'src/common/enum/role.enum';
 import { StatusUser } from 'src/common/enum/user.enum';
 
 export class CreateUserReq {

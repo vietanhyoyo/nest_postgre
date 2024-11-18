@@ -3,11 +3,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import Role from '../common/enum/role.enum';
 import { StatusUser } from '../common/enum/user.enum';
+import { Role } from './role';
 
 @Entity('user', { schema: 'public' })
 export class User {
@@ -31,8 +33,7 @@ export class User {
   @IsEnum(StatusUser)
   status: StatusUser;
 
-  @Column()
-  @IsEnum(Role)
+  @ManyToOne(() => Role, { nullable: true, eager: true })
   role: Role;
 
   @Column()

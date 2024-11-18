@@ -35,4 +35,9 @@ export class UserRepository {
 
     return [users, total];
   }
+
+  async isUserTableEmpty(): Promise<boolean> {
+    const count = await this.repo.count();
+    return count === 0;
+  }
 }

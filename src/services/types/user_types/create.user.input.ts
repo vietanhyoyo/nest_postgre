@@ -1,4 +1,4 @@
-import Role from "src/common/enum/role.enum";
+import { Role } from "@/entities/role";
 import { StatusUser } from "src/common/enum/user.enum";
 
 export interface CreateUserInput {

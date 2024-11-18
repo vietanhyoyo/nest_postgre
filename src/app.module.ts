@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -14,6 +14,8 @@ import { ProductModule } from './modules/product.module';
 import { TagModule } from './modules/tag.module';
 import { IdolModule } from './modules/idol.module';
 import { NewsModule } from './modules/news.module';
+import { SeedModule } from './modules/seed.module';
+import { SeedService } from './services/seed.service';
 
 @Module({
   imports: [
@@ -24,6 +26,7 @@ import { NewsModule } from './modules/news.module';
     GlobalModule,
     PassportModule,
     DatabaseModule,
+    SeedModule,
     UserModule,
     AuthModule,
     WarehouseModule,
