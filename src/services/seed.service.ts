@@ -4,7 +4,6 @@ import { PermissionRepository } from '@/repositories/permission.repositories';
 import { RoleRepository } from '@/repositories/role.repositories';
 import { UserRepository } from '@/repositories/user.repositories';
 import { Injectable, OnModuleInit, Scope } from '@nestjs/common';
-import { StatusUser } from '@/common/enum/user.enum';
 import { User } from '@/entities/user';
 
 @Injectable({ scope: Scope.DEFAULT })
@@ -21,7 +20,8 @@ export class SeedService implements OnModuleInit {
 
   // Initial data
   async seed() {
-    if (this.permissionRepo.isPermissionTableEmpty()) {
+    if (await this.permissionRepo.isPermissionTableEmpty()) {
+
       // Create permissions
       const per1 = await this.permissionRepo.create({
         name: 'CREATE_USER',
@@ -34,7 +34,7 @@ export class SeedService implements OnModuleInit {
       });
 
       // Create roles
-      if (this.roleRepo.isRoleTableEmpty()) {
+      if (await this.roleRepo.isRoleTableEmpty()) {
         this.roleRepo.create({
           name: RoleEnum.NORMAL,
           description: 'normal user',
@@ -48,7 +48,7 @@ export class SeedService implements OnModuleInit {
         });
 
         // Create admin user
-        if (this.userRepo.isUserTableEmpty()) {
+        if (await this.userRepo.isUserTableEmpty()) {
           let user = new User();
 
           user.email = 'admin@gmail.com';

@@ -13,12 +13,14 @@ export class UserRepository {
   async findById(id: number) {
     return this.repo.findOne({
       where: { user_id: id },
+      relations: ['role', 'role.permissions'],
     });
   }
 
   async findByEmail(email: string) {
     return this.repo.findOne({
       where: { email: email },
+      relations: ['role', 'role.permissions'],
     });
   }
 
