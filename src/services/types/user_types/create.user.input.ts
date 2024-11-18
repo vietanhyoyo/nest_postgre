@@ -1,4 +1,3 @@
-import { Role } from "@/entities/role";
 import { StatusUser } from "src/common/enum/user.enum";
 
 export interface CreateUserInput {
@@ -6,5 +5,5 @@ export interface CreateUserInput {
   password: string;
   email: string;
   status: StatusUser;
-  role: Role;
+  roles: string[];
 }

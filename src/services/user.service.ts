@@ -5,10 +5,15 @@ import { User } from 'src/entities/user';
 import { hash } from 'bcrypt';
 import { ErrorMessage } from 'src/common/enum/error.message.enum';
 import { PaginationInput } from 'src/services/types/pagination_types/pagination.input';
+import { Role } from '@/entities/role';
+import { RoleRepository } from '@/repositories/role.repositories';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class UserService {
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(
+    private readonly userRepo: UserRepository,
+    private readonly roleRepo: RoleRepository,
+  ) {}
 
   async createUser(input: CreateUserInput) {
     let user = new User();
@@ -21,8 +26,12 @@ export class UserService {
     user.email = input.email;
     user.user_name = input.user_name;
     user.status = input.status;
-    user.role = [input.role];
     user.password = await hash(input.password, 12);
+
+    if (input.roles && input.roles.length > 0) {
+      const foundRoles = await this.roleRepo.findByNames(input.roles);
+      user.role = foundRoles;
+    }
 
     return await this.userRepo.create(user);
   }

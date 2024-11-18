@@ -7,16 +7,18 @@ import {
   Headers,
   UnauthorizedException,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from 'src/services/user.service';
 import { CreateUserReq } from 'src/controllers/types/user_types/create.user.req';
 import { UserRes } from 'src/controllers/types/user_types/user.res';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Public } from 'src/common/decorators/public.decorator';
 import { GetAllUserReq } from './types/user_types/get.all.user.req';
 import { GetAllUserRes } from './types/user_types/get.all.user.res';
+import { HasRoles } from '@/common/decorators/roles.decorator';
+import { RolesGuard } from '@/common/guards/roles.guard';
+import RoleEnum from '@/common/enum/role.enum';
 
 @ApiTags('user')
 @ApiBearerAuth()
@@ -27,6 +29,8 @@ export class UserController {
     private jwtService: JwtService,
   ) {}
 
+  @HasRoles(RoleEnum.ADMIN)
+  @UseGuards(RolesGuard)
   @Post('/')
   @HttpCode(201)
   @ApiResponse({

@@ -1,4 +1,5 @@
 import { Role } from '@/entities/role';
+import { RoleRepository } from '@/repositories/role.repositories';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule, JwtService } from '@nestjs/jwt';
@@ -23,7 +24,7 @@ import { UserService } from 'src/services/user.service';
     }),
   ],
   controllers: [UserController],
-  providers: [UserService, UserRepository, JwtService],
+  providers: [UserService, UserRepository, JwtService, RoleRepository],
   exports: [UserRepository],
 })
 export class UserModule {}

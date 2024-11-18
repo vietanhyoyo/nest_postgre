@@ -1,6 +1,6 @@
 import { Role } from '@/entities/role';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsEnum, IsString } from 'class-validator';
+import { IsArray, IsEmail, IsEnum, IsString } from 'class-validator';
 import { StatusUser } from 'src/common/enum/user.enum';
 
 export class CreateUserReq {
@@ -21,6 +21,6 @@ export class CreateUserReq {
   status: StatusUser;
 
   @ApiProperty()
-  @IsEnum(Role)
-  role: Role;
+  @IsArray()
+  roles: string[];
 }

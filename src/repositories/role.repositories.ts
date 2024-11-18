@@ -1,7 +1,7 @@
 import { Role } from '@/entities/role';
 import { Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class RoleRepository {
@@ -18,5 +18,13 @@ export class RoleRepository {
   async create(role: Role) {
     const newRole = await this.repo.save(role);
     return newRole;
+  }
+
+  async findByNames(names: string[]) {
+    return this.repo.find({
+      where: {
+        name: In(names), 
+      },
+    });
   }
 }
