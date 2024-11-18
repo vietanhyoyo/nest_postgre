@@ -4,6 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -33,8 +35,19 @@ export class User {
   @IsEnum(StatusUser)
   status: StatusUser;
 
-  @ManyToOne(() => Role, { nullable: true, eager: true })
-  role: Role;
+  @ManyToMany(() => Role)
+  @JoinTable({
+    name: 'user_role',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'user_id',
+    },
+    inverseJoinColumn: {
+      name: 'role_name',
+      referencedColumnName: 'name',
+    },
+  })
+  role: Role[];
 
   @Column()
   @CreateDateColumn({

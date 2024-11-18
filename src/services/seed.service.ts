@@ -53,7 +53,7 @@ export class SeedService implements OnModuleInit {
 
           user.email = 'admin@gmail.com';
           user.user_name = 'admin';
-          user.role = adminUser;
+          user.role = [adminUser];
           user.password = await hash('admin', 12);
 
           this.userRepo.create(user);

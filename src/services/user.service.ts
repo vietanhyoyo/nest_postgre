@@ -21,7 +21,7 @@ export class UserService {
     user.email = input.email;
     user.user_name = input.user_name;
     user.status = input.status;
-    user.role = input.role;
+    user.role = [input.role];
     user.password = await hash(input.password, 12);
 
     return await this.userRepo.create(user);
