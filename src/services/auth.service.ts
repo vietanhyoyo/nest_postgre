@@ -37,10 +37,26 @@ export class AuthService {
 
     const tokenId = uuidv4();
 
+    let roles = [];
+    let permissionsSet = new Set<string>();
+
+    for (let i = 0; i < userInDb.role.length; i++) {
+      const role = userInDb.role[i];
+      roles.push(role.name);
+
+      for (let j = 0; j < role.permissions.length; j++) {
+        permissionsSet.add(role.permissions[j].name);
+      }
+    }
+
+    // Chuyển Set thành mảng
+    const permissions = Array.from(permissionsSet);
+
     const payload = {
       token_id: tokenId,
       user_id: userInDb.user_id,
-      role: userInDb.role,
+      roles: roles,
+      permissions: permissions,
       user_name: userInDb.user_name,
     };
     return await this.login(payload);
@@ -49,9 +65,7 @@ export class AuthService {
   async login(payload: any) {
     return {
       access_token: this.jwtService.sign(payload),
-      user_id: payload.user_id,
-      role: payload.role,
-      user_name: payload.user_name,
+      payload: payload,
     };
   }
 
