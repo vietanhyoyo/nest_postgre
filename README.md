@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/nestjs_logo_icon_169927.png" alt="NestJS Logo" width="200">
+</p>
+
 # NestJS Base API Project
 
 This is a base source code for a NestJS project. It is an API that provides methods for posting news articles, managing idol and celebrity information, and handling user management.
@@ -85,6 +89,3 @@ $ npm run migration:create -- src/migrations/NameFile
 $ npm run migration:run
 ```
 
-<p align="center">
-  <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/nestjs_logo_icon_169927.png" alt="NestJS Logo" width="200">
-</p>
