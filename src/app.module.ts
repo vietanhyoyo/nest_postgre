@@ -9,13 +9,10 @@ import { JwtAuthGuard } from './common/guards/jwt.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { PassportModule } from '@nestjs/passport';
 import { GlobalModule } from './modules/global.module';
-import { WarehouseModule } from './modules/warehouse.module';
-import { ProductModule } from './modules/product.module';
 import { TagModule } from './modules/tag.module';
 import { IdolModule } from './modules/idol.module';
 import { NewsModule } from './modules/news.module';
 import { SeedModule } from './modules/seed.module';
-import { SeedService } from './services/seed.service';
 
 @Module({
   imports: [
@@ -29,8 +26,6 @@ import { SeedService } from './services/seed.service';
     SeedModule,
     UserModule,
     AuthModule,
-    WarehouseModule,
-    ProductModule,
     TagModule,
     IdolModule,
     NewsModule,
