@@ -1,29 +1,25 @@
-import { Role } from '@/entities/role';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsEmail, IsEnum, IsNumber, IsString } from 'class-validator';
 import { StatusUser } from 'src/common/enum/user.enum';
 
-export class UserRes {
+export class UpdateUserReq {
   @ApiProperty()
+  @IsNumber()
   user_id: number;
 
   @ApiProperty()
+  @IsString()
   user_name: string;
 
   @ApiProperty()
+  @IsString()
   password: string;
 
   @ApiProperty()
-  email: string;
-
-  @ApiProperty()
+  @IsEnum([StatusUser.ENABLE, StatusUser.DISABLE])
   status: StatusUser;
 
   @ApiProperty()
-  role: Role;
-
-  @ApiProperty()
-  createdAt: string;
-
-  @ApiProperty()
-  updatedAt: string;
+  @IsArray()
+  roles: string[];
 }

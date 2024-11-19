@@ -8,6 +8,7 @@ import {
   UnauthorizedException,
   Query,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { UserService } from 'src/services/user.service';
 import { CreateUserReq } from 'src/controllers/types/user_types/create.user.req';
@@ -19,6 +20,8 @@ import { GetAllUserRes } from './types/user_types/get.all.user.res';
 import { HasRoles } from '@/common/decorators/roles.decorator';
 import { RolesGuard } from '@/common/guards/roles.guard';
 import RoleEnum from '@/common/enum/role.enum';
+import { UpdateUserReq } from './types/user_types/update.user.req';
+import { Public } from '@/common/decorators/public.decorator';
 
 @ApiTags('user')
 @ApiBearerAuth()
@@ -71,5 +74,16 @@ export class UserController {
     @Query() queryParams: GetAllUserReq,
   ) {
     return await this.userService.getAllUsers(queryParams);
+  }
+
+  @Public()
+  @Patch('/update')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: UserRes,
+  })
+  async update(@Body() body: UpdateUserReq) {
+    return this.userService.updateUser(body);
   }
 }

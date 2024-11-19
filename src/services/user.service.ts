@@ -1,12 +1,12 @@
-import { BadRequestException, Injectable, Scope } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { UserRepository } from 'src/repositories/user.repositories';
 import { CreateUserInput } from 'src/services/types/user_types/create.user.input';
 import { User } from 'src/entities/user';
 import { hash } from 'bcrypt';
 import { ErrorMessage } from 'src/common/enum/error.message.enum';
 import { PaginationInput } from 'src/services/types/pagination_types/pagination.input';
-import { Role } from '@/entities/role';
 import { RoleRepository } from '@/repositories/role.repositories';
+import { UpdateUserInput } from './types/user_types/update.user.input';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class UserService {
@@ -60,5 +60,28 @@ export class UserService {
       currentPage: page,
       users,
     };
+  }
+
+  async updateUser(input: UpdateUserInput) {
+    // Check if user exists by ID
+    const user = await this.userRepo.findById(input.user_id);
+
+    if (!user) {
+      throw new NotFoundException(ErrorMessage.DATA_NOT_FOUND);
+    }
+
+    user.user_name = input.user_name;
+    user.status = input.status;
+    user.password = await hash(input.password, 12);
+
+    if (input.roles && input.roles.length > 0) {
+      const foundRoles = await this.roleRepo.findByNames(input.roles);
+      user.role = foundRoles;
+    }
+
+    // Save the updated user
+    const updatedUser = await this.userRepo.update(user);
+
+    return updatedUser;
   }
 }

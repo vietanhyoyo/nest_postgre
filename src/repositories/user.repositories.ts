@@ -42,4 +42,12 @@ export class UserRepository {
     const count = await this.repo.count();
     return count === 0;
   }
+
+  async update(updateData: Partial<User>): Promise<User> {
+    await this.repo.save(updateData);
+    return this.repo.findOne({
+      where: { user_id: updateData.user_id },
+      relations: ['role'],
+    });
+  }
 }
