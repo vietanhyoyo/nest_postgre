@@ -30,13 +30,13 @@ The project is built with modern technologies:
 - Docker >= 20
 - PostgreSQL >= 12
 
-## Installation
+## 🔧 Installation
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## ⭐️ Running the app
 
 ```bash
 # development
@@ -50,21 +50,21 @@ $ npm run build
 $ npm run start:prod
 ```
 
-## Running the app with docker
+## 🐳 Running the app with docker
 
 ```bash
 $ docker-compose up --build
 ```
 
-## API Documentation with Swagger
+## 📜 API Documentation with Swagger
 
 http://localhost:3004/doc
 
-## Set up environment variables
+## ⚙️ Set up environment variables
 
 Update enviroment file in the src/config/env folder
 
-## Test
+## 🧪 Test
 
 ```bash
 # unit tests
@@ -77,10 +77,14 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Migrations script
+## 🪞 Migrations script
 
 ```bash
 $ npm run migration:create -- src/migrations/NameFile
 
 $ npm run migration:run
 ```
+
+<p align="center">
+  <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/nestjs_logo_icon_169927.png" alt="NestJS Logo" width="200">
+</p>
