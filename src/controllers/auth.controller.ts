@@ -11,6 +11,8 @@ import { LoginReq } from './types/auth_types/login.req';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginRes } from './types/auth_types/login.res';
 import { Public } from 'src/common/decorators/public.decorator';
+import { RefreshTokenRes } from './types/auth_types/refresh_token.res';
+import { RefreshTokenReq } from './types/auth_types/refresh_token.req';
 
 @ApiTags('auth')
 @ApiBearerAuth()
@@ -35,7 +37,6 @@ export class AuthController {
     status: 204,
   })
   async logout(@Headers('Authorization') authorization: string) {
-
     if (!authorization) {
       throw new UnauthorizedException('Token is missing');
     }
@@ -43,5 +44,16 @@ export class AuthController {
     const token = authorization.split(' ')[1];
 
     this.authService.logout(token);
+  }
+
+  @Public()
+  @Post('refresh')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: RefreshTokenRes,
+  })
+  async refresh(@Body() request: RefreshTokenReq) {
+    return await this.authService.refresh(request.refresh_token);
   }
 }

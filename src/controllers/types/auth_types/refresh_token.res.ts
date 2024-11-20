@@ -1,7 +1,7 @@
 import { IsObject, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class LoginRes {
+export class RefreshTokenRes {
   @ApiProperty()
   @IsString()
   access_token: string;

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { ErrorMessage } from 'src/common/enum/error.message.enum';
 import { StatusUser } from 'src/common/enum/user.enum';
 import { UserRepository } from 'src/repositories/user.repositories';
@@ -7,6 +11,7 @@ import { LoginInput } from 'src/services/types/auth_types/login.input';
 import { JwtService } from '@nestjs/jwt';
 import { v4 as uuidv4 } from 'uuid';
 import { InvalidatedTokenRepository } from '@/repositories/invalidated_token.repositories';
+import { User } from '@/entities/user';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +20,8 @@ export class AuthService {
     private readonly invalidatedTokenRepo: InvalidatedTokenRepository,
     private readonly jwtService: JwtService,
   ) {}
+
+  refreshTokenExpiry = '3d';
 
   async validate(user: LoginInput) {
     const userInDb = await this.userRepo.findByEmail(user.email);
@@ -35,27 +42,8 @@ export class AuthService {
       }
     }
 
-    let roles = [];
-    let permissionsSet = new Set<string>();
-    for (let i = 0; i < userInDb.role.length; i++) {
-      const role = userInDb.role[i];
-      roles.push(role.name);
-      
-      for (let j = 0; j < role.permissions.length; j++) {
-        permissionsSet.add(role.permissions[j].name);
-      }
-    }
-    
-    const permissions = Array.from(permissionsSet);
-    const tokenId = uuidv4();
+    const payload = this.createPayload(userInDb);
 
-    const payload = {
-      token_id: tokenId,
-      user_id: userInDb.user_id,
-      roles: roles,
-      permissions: permissions,
-      user_name: userInDb.user_name,
-    };
     return await this.login(payload);
   }
 
@@ -63,7 +51,7 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
       refresh_token: await this.jwtService.signAsync(payload, {
-        expiresIn: '3d',
+        expiresIn: this.refreshTokenExpiry,
       }),
       payload: payload,
     };
@@ -79,5 +67,54 @@ export class AuthService {
       id: tokenId,
       expiry_time,
     });
+  }
+
+  async refresh(refreshToken: string) {
+    try {
+      await this.jwtService.verifyAsync(refreshToken);
+
+      const decodedToken = this.jwtService.decode(refreshToken) as any;
+
+      const { user_id: userId, token_id: tokenId } = decodedToken;
+
+      const user = await this.userRepo.findById(userId);
+      if (!user) {
+        throw new ForbiddenException(ErrorMessage.USER_NOT_FOUND);
+      }
+
+      // Create new payload from user information
+      const payload = this.createPayload(user);
+
+      const accessToken = this.jwtService.sign(payload);
+      const refreshTokenNew = await this.jwtService.signAsync(payload, {
+        expiresIn: this.refreshTokenExpiry,
+      });
+
+      return {
+        access_token: accessToken,
+        refresh_token: refreshTokenNew,
+        payload,
+      };
+    } catch (error) {
+      throw new ForbiddenException(error.message || ErrorMessage.ACCESS_DENIED);
+    }
+  }
+
+  createPayload(user: User) {
+    const roles = user.role.map((role) => role.name);
+    const permissions = user.role
+      .flatMap((role) => role.permissions)
+      .map((permission) => permission.name);
+
+    const newTokenId = uuidv4();
+    const payload = {
+      token_id: newTokenId,
+      user_id: user.user_id,
+      roles,
+      permissions,
+      user_name: user.user_name,
+    };
+
+    return payload;
   }
 }
