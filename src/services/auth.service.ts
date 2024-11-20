@@ -35,22 +35,19 @@ export class AuthService {
       }
     }
 
-    const tokenId = uuidv4();
-
     let roles = [];
     let permissionsSet = new Set<string>();
-
     for (let i = 0; i < userInDb.role.length; i++) {
       const role = userInDb.role[i];
       roles.push(role.name);
-
+      
       for (let j = 0; j < role.permissions.length; j++) {
         permissionsSet.add(role.permissions[j].name);
       }
     }
-
-    // Chuyển Set thành mảng
+    
     const permissions = Array.from(permissionsSet);
+    const tokenId = uuidv4();
 
     const payload = {
       token_id: tokenId,
@@ -65,6 +62,9 @@ export class AuthService {
   async login(payload: any) {
     return {
       access_token: this.jwtService.sign(payload),
+      refresh_token: await this.jwtService.signAsync(payload, {
+        expiresIn: '3d',
+      }),
       payload: payload,
     };
   }
@@ -73,7 +73,7 @@ export class AuthService {
     const decodedToken = this.jwtService.decode(token);
     const tokenId = decodedToken.token_id;
     const exp = decodedToken.exp;
-    const expiry_time = new Date(1731765116 * 1000);
+    const expiry_time = new Date(exp * 1000);
 
     await this.invalidatedTokenRepo.create({
       id: tokenId,
